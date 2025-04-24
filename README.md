@@ -15,20 +15,17 @@ See the docs/Submission.txt for more information regarding the philosophy of dev
 ## Using the overlays in a video stream
 
 
-### Score Bug /score_bug
+### Score Bug:  http://127.0.0.1/score_bug
 <img width="282" alt="image" src="https://github.com/user-attachments/assets/f806e405-335d-47ee-a9b1-eec596b7d289" />
 
-### Box Score /box_score
+### Box Score:  http://127.0.0.1/box_score
 <img width="881" alt="image" src="https://github.com/user-attachments/assets/1d9cc9fd-5d30-4c4b-95c7-ff7a10806200" />
 
-### Lower Third /lower_third
+### Lower Third:  http://127.0.0.1/lower_third
 <img width="526" alt="image" src="https://github.com/user-attachments/assets/f72ed593-0c22-4da7-8d1e-91a4ee6590ee" />
 
 
-This works well with OBS, just select the appropriate end-point and add it as a browser-source.   The endpoints are:
- /score_bug     Upper corner mini scoreboard.
- /full_score    Box-score, for between innings
- /lower_third   A lower left simple graphic
+This works well with OBS, just select the appropriate end-point and add it as a browser-source.
 
 ## Making new templates
 The server serves a single file, so you'll need to include all content in the template file including images if desired, as base-64 encoded images.   See the example templates for basic design.
