@@ -1,0 +1,116 @@
+
+### About this Project #####
+
+This project was created with the intent of being used to score and generate live-stream scoreboard
+overlays - with low effort and a minimal cognitive load. To best evaluate it, I recommend pretending 
+you're scoring a live game and walking through inning by inning.   It was conceived due to the
+difficulty of running cameras, sound, and keeping score all at once by a single person - the score 
+keeping alone can easily take the entire mental focus of a single person when done in the traditional 
+manner.   I started work on the server version in early March with the hope of having something useful
+for this year's softball season, and in late April added the command line client to meet the cs50.dev 
+requirement.  I've been using and improving iterations of the program at each home game since, refining
+the approach, simplifying the user interface, adding more metrics and features, and debugging the API.
+
+The application consists of a server which maintains the state of the current game, tracking a number
+of key metrics at the team level, and a command line client to interact with the server.   Additionally,
+configuration files for using with external hardware and software - namely a StreamDeck XL - are included
+as a more streamlined approach in real-world usage.
+
+The server provides an API to interact with it, as well as 'save' and 'load' utility for keeping the results
+after the game is over, or reloading in the middle of a game.   It offers three endpoints that render
+and return HTML page templates which are intended to be composited as an overlay on the video stream.   
+
+When you first launch the application, it will by default load into a blank game at the top of Inning 1.
+In softball, the Visiting team always bats first, as denoted by the * on the scoreboard. As the inning 
+progresses, you can use the 'b', 's', and 'o' keys to record pitches, update the count, and record outs.   
+If a foul ball occurs on the 2nd strike, you can press 'p' to increment the pitch count without changing 
+the umpire's count.
+
+The commands always act in a context relevant to the appropriate batting / fielding team, which is
+derived from the current half-inning of the game.  For example, scoring an error by pressing 'e' will 
+record it against the Home team in the top of an inning, and the Visiting team in the bottom of an 
+inning, since by convention errors are produced by the fielding team.   For the scorekeeper this means 
+not having to keep up with each team individually, but rather just to observe and report - simply press 
+the error key and it will log an error correctly for the current fielding team.
+
+Similarly, scoring a run by pressing 'r' will record it for the batting team - i.e. Home in the bottom
+and Visitors in the top of every inning, and scoring a ball by pressing 'b' will record the pitch 
+for the fielding team.
+
+By convention:
+  - High school softball games in Michigan play for 7 innings, with one inning tie breaker (8)
+  - The Visitor team always bats in the top of the inning, and the Home team in the bottom.
+  - walks are scored against the fielding team
+  - steals are scored for the batting team
+  - errors are scored against the fielding team
+  - balls, strikes, hits, and pitches (foul balls) increment the pitch count for the fielding team.
+  - hits and runs are scored for the batting team
+
+As the game progresses, the easiest way to advance the application into the next half-inning is to 
+press the 'a' (advance) key.   This will walk from the top to the bottom, and then into the top of the 
+next inning, and so on to completion.  This reduces the cognitive load of retaining and accurately
+remembering each inning, which team is up first or second, and turns the score keeper app into an ally 
+to retain this information for you instead of something else to keep updated.  The required mental
+load is reduced to pressing a button when the teams change fields, and as long as this is done
+during inning change it's very hard to get the box score wrong.
+
+While this context-based approach may seem unorthodox at first, it's very fast to get reasonably accurate 
+game stats since you just follow the game as it progresses and don't have to think much about which team 
+should be affected by any given plays, and was developed based on struggles with the early attempts of the
+server application in the first few games of this season.   I found it frustratingly easy to be focused 
+on something else and accidentally record runs in the wrong inning, or forget to set the top / bottom of 
+an inning during play, or record pitches for the wrong team using a 'Visitor Pitch' and 'Home Pitch' type 
+approach, often needing manual correction from the game's assigned scorekeeper.   Since adopting this
+context-based approach, the accuracy has improved and rarely are updates needed.
+
+The opportunity for scoring errors is greatly reduce - if you see 
+someone score, just press the 'r' key.   If you see someone steal, use 'st'.  When they go to the dugout, 
+advance the game with the 'a' key, and so on.  The program allows you to focus on other tasks while it 
+keeps up with the detailed mechanics of scoring, which is exactly what I needed. :)
+
+
+#### How to Run #####
+
+For evaluation by TA's and Harvard staff, the command line client was designed to run simply in the 
+cs50.dev environment, and is the recommended way to evaluate the application.
+
+1) Command line version (Recommended)
+ - open and launch 'client.py'
+ - choose 'y' when asked if you want to also start a server.
+ - The server will start in another thread on port 8081, and the command-line client will connect.
+ - Go about the evaluation - type 'help' to see all supported commands.
+ - To view the http overlays, forward port 8081 in cs50.dev and access the provided endpoints.
+
+ Three video overlays are provided - score_bug.html, full_score.html, and lower_third.html.   These are accessed
+ at the below endpoints, and you can have any or all active at any given time.   They refresh every
+ second or two automatically to keep the overlay up to date with the application.  In live use, these overlays
+ are composited onto the video stream using OBS software's 'browser source', and the OBS source is mapped to a 
+ streamdeck key to turn on / off each overlay depending on which one I want to display.  The overlays
+ work best with a chromium-based browser such as Google Chrome or Microsoft Edge.
+
+    /score_bug      The upper corner overlay "bug"
+    /full_score     The box score render, often displayed between innings.
+    /lower_third    A lower screen graphic
+
+
+If you're satisfied with the command line client there's really no need to use the stand-alone server
+version for evaluation of the program, but battle-tested configurations are provided if you're curious.
+
+2) Local environment with StreamDeck (Optional)
+This is what I use to actually score the games, but requires using a local environment and additional software.
+It does not offer additional functionality, but adapts to an improved user interface which is a bit easier
+to use during a busy game than the command line client.
+
+If you wish to try it out:
+ - Install BitFocus Companion application (free).
+ - Load the supplied companion config file per their documentation.
+ - Go to the "emulator" tab, or connect a StreamDeck XL if you happen to have one.
+ - Make sure the emulator is configured to use a 8x4 button grid.
+ - Launch server.py on your local machine - it will by default launch on 127.0.0.1:8081
+ - Load a browser template at http://127.0.0.1:8081/score_bug to see the score overlays.
+ - Use the Companion buttons on the emulator tab (or your physical hardware) to score the game.
+ - Optionally load the overlay into OBS using the "browser" source if you want to try it out on a live stream.
+
+Thank you for all your efforts and teaching this semester!  Although I did have some prior background in CS,
+my last formal class was in 2001 learning C99.  This class has been a pleasure and I learned quite a bit
+which I will carry with me onto future endeavors.   Thank you!
