@@ -1,26 +1,28 @@
 
 # Softball Scorekeeper
 
-A simple python application developed for E-7 class, which keeps the score of a game and also generates a few different scoreboard overlays for use in a live video stream of the game.
+A simple python application developed for E-7-Introduction to Computer Science class, which keeps the score of a game and also generates a few different scoreboard overlays for use in a live video stream of the game.   The main goal was to have a low cognitive load for scoring and generating overlays from the press box while multi-tasking, and this utility adopts a unique context-based approach to scoring which is quite nice to use and easy to keep up with during a game.
 
-# How to use
-Download the project, and launch client.py.   This will start the command line client utility.   Type 'help' for help.
+## How to use
+Download the project, and launch client.py.   This will start the command line client utility.   Type 'y' if you wish to start a server in another thread, or 'n' if you're running server.py separately or hosting it somewhere.  After that the client will load - type 'help' for help to see all supported command line client utilities.
 
 See the docs/Submission.txt for more information regarding the philosophy of development and notes on usage.
 
-# Using the overlays in a video
+## Using the overlays in a video stream
 This works well with OBS, just select the appropriate end-point and add it as a browser-source.   The endpoints are:
  /score_bug     Upper corner mini scoreboard.
  /full_score    Box-score, for between innings
  /lower_third   A lower left simple graphic
 
-# Making new templates
+## Making new templates
 The server serves a single file, so you'll need to include all content in the template file including images if desired, as base-64 encoded images.   See the example templates for basic design.
 
 To include the server data, see the docs for supported template substitutions.
 
 
-# License
-This was developed for E-7, Introduction to Computer Science, by myself.  Upon course completion on May 18th, 2025 the license will be MIT license.   Prior to that, the license is proprietary.
+## Integrations with StreamDeck / Bitfocus Companion
+The app works well with bitfocus Companion and a streamdeck.   Just map your keys to the appropriate http get() endpoints, or use the sample configuration provided for pre-mapped keys.   If you're using it with companion, I recommend running server.py independently of the command line client so you can see the log history.
 
+## License
+This was originally developed for the E-7 "Introduction to Computer Science in Python" course at Harvard Extension school as part of the final term project.  Upon course completion on May 18th, 2025 the license will be MIT license.   Prior to that, the license is proprietary and use is not permitted.
 
