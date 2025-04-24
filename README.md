@@ -8,16 +8,23 @@ Download the project, and launch client.py.   This will start the command line c
 
 <img width="702" alt="image" src="https://github.com/user-attachments/assets/0829f83a-4fda-49da-a7ea-50c6c7c7fbd9" />
 
-<img width="282" alt="image" src="https://github.com/user-attachments/assets/f806e405-335d-47ee-a9b1-eec596b7d289" />
-
-<img width="881" alt="image" src="https://github.com/user-attachments/assets/1d9cc9fd-5d30-4c4b-95c7-ff7a10806200" />
-
-<img width="526" alt="image" src="https://github.com/user-attachments/assets/f72ed593-0c22-4da7-8d1e-91a4ee6590ee" />
-
+Use the client to keep score, and load the overlays in a browser source in OBS to use them as part of your live stream.
 
 See the docs/Submission.txt for more information regarding the philosophy of development and notes on usage.
 
 ## Using the overlays in a video stream
+
+
+### Score Bug /score_bug
+<img width="282" alt="image" src="https://github.com/user-attachments/assets/f806e405-335d-47ee-a9b1-eec596b7d289" />
+
+### Box Score /box_score
+<img width="881" alt="image" src="https://github.com/user-attachments/assets/1d9cc9fd-5d30-4c4b-95c7-ff7a10806200" />
+
+### Lower Third /lower_third
+<img width="526" alt="image" src="https://github.com/user-attachments/assets/f72ed593-0c22-4da7-8d1e-91a4ee6590ee" />
+
+
 This works well with OBS, just select the appropriate end-point and add it as a browser-source.   The endpoints are:
  /score_bug     Upper corner mini scoreboard.
  /full_score    Box-score, for between innings
